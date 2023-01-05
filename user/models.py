@@ -13,7 +13,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(('last name'), max_length=30)
     date_of_birth = models.DateField(('date of birth'), blank=True, null=True)
     phone = models.IntegerField(('phone number'), blank=True, null=True)
-    photo = models.ImageField(('user photo'), upload_to='photo')
+    photo = models.ImageField(('user photo'), upload_to='photo', blank=True, null=True)
     
     date_joined = models.DateTimeField(('date joined'), default=timezone.now)
     is_staff = models.BooleanField(('staff'), default=False)
