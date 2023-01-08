@@ -53,3 +53,40 @@ class Teacher(models.Model):
 
     def __str__(self):
         return f'{self.user}'
+
+
+class Student(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    specialty = models.CharField(_('Specialty'), max_length=30, blank=True, null=True)
+    educational_program = models.CharField(_('Educational program'), max_length=30, blank=True, null=True)
+    
+    EDUCATIONAL_LEVEL_CHOICES = [
+        ('Б', 'Бакалаврат'),
+        ('М', 'Магістратура'),
+        ('Д', 'Докторантура')
+    ]
+    educational_level = models.CharField(
+        _('Educational level'), 
+        max_length=30,
+        choices=EDUCATIONAL_LEVEL_CHOICES, 
+        blank=True, 
+        null=True
+    )
+    
+    group = models.CharField(_('Group'), max_length=6, blank=True, null=True)
+    entry_date = models.DateField(_('Entry date'), blank=True, null=True)
+
+    EDUCATION_FORM_CHOICES = [
+        ('Д', 'Денна'),
+        ('З', 'Заочна')
+    ]
+    education_form = models.CharField(
+        _('Education form'), 
+        max_length=10, 
+        choices=EDUCATION_FORM_CHOICES, 
+        blank=True, 
+        null=True
+    )
+
+    def __str__(self):
+        return f'{self.user}'
