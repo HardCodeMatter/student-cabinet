@@ -90,3 +90,15 @@ class Student(models.Model):
 
     def __str__(self):
         return f'{self.user}'
+
+
+class Course(models.Model):
+    name = models.CharField(_('Name'), max_length=50)
+    short_name = models.CharField(_('Short name'), max_length=10)
+    description = models.CharField(_('Description'), max_length=300, blank=True, null=True)
+    teacher = models.ForeignKey(User, on_delete=models.CASCADE)
+    hours = models.IntegerField(_('Hours'))
+    points = models.IntegerField(_('Points'))
+
+    def __str__(self):
+        return f'{self.name}'
