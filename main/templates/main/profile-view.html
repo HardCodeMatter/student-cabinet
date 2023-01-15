@@ -1,0 +1,11 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="bg-white text-dark rounded p-3">
+        {% if profile %}
+            {{ profile.user }}
+        {% else %}
+            <a class="btn btn-primary" href="{% url 'profile_create' %}">Create</a>
+        {% endif %}
+    </div>
+{% endblock %}
