@@ -12,8 +12,8 @@ class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 
-    list_display = ('__str__', 'email', 'group')
-    list_filter = ('last_name', 'first_name', 'email', 'group')
+    list_display = ('__str__', 'email', 'type')
+    list_filter = ('last_name', 'first_name', 'email', 'type')
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
@@ -32,7 +32,7 @@ class UserAdmin(BaseUserAdmin):
             'is_verified',
         )}),
         ('University information', {'fields': (
-            'group',
+            'type',
         )}),
     )
     add_fieldsets = (

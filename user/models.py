@@ -20,13 +20,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(('active'), default=True)
     is_verified = models.BooleanField(('verified'), default=False)
 
-    GROUP_CHOICES = [
+    TYPE_CHOICES = [
         ('ST', 'Student'),
         ('TR', 'Teacher'),
     ]
-    group = models.CharField(
+    type = models.CharField(
         max_length=2, 
-        choices=GROUP_CHOICES, 
+        choices=TYPE_CHOICES,
         default='ST'
     )
 
