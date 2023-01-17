@@ -3,7 +3,42 @@
 {% block content %}
     <div class="bg-white text-dark rounded p-3">
         {% if profile %}
-            {{ profile.user }}
+            <div class="form-floating">
+                <input type="text" readonly class="form-control-plaintext" id="floatingFullName" value="{{ user.get_full_name }}">
+                <label for="floatingFullName">ПІБ</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="text" readonly class="form-control-plaintext" id="floatingSpecialty" value="{{ profile.specialty }}">
+                <label for="floatingSpecialty">Спеціальність</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="text" readonly class="form-control-plaintext" id="floatingEducationalProgram" value="{{ profile.educational_program }}">
+                <label for="floatingEducationalProgram">Навчальна програма</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="text" readonly class="form-control-plaintext" id="floatingEducationalLevel" value="{{ profile.educational_level }}">
+                <label for="floatingEducationalLevel">Освітній рівень</label>
+            </div>
+            
+            <div class="form-floating">
+                <input type="text" readonly class="form-control-plaintext" id="floatingGroup" value="{{ profile.group }}">
+                <label for="floatingGroup">Група</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="text" readonly class="form-control-plaintext" id="floatingEducationForm" value="{{ profile.education_form }}">
+                <label for="floatingEducationForm">Навчальна форма</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="text" readonly class="form-control-plaintext" id="floatingEntryDate" value="{{ profile.entry_date }}">
+                <label for="floatingEntryDate">Дата вступу</label>
+            </div>
+
+            <a class="btn btn-outline-warning" href="{% url 'profile_update' %}">Edit</a>
         {% else %}
             <a class="btn btn-primary" href="{% url 'profile_create' %}">Create</a>
         {% endif %}

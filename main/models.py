@@ -61,9 +61,9 @@ class Student(models.Model):
     educational_program = models.CharField(_('Educational program'), max_length=30, blank=True, null=True)
     
     EDUCATIONAL_LEVEL_CHOICES = [
-        ('Б', 'Бакалаврат'),
-        ('М', 'Магістратура'),
-        ('Д', 'Докторантура')
+        ('Бакалавр', 'Бакалаврат'),
+        ('Магістр', 'Магістратура'),
+        ('Докторант', 'Докторантура')
     ]
     educational_level = models.CharField(
         _('Educational level'), 
@@ -77,8 +77,8 @@ class Student(models.Model):
     entry_date = models.DateField(_('Entry date'), blank=True, null=True)
 
     EDUCATION_FORM_CHOICES = [
-        ('Д', 'Денна'),
-        ('З', 'Заочна')
+        ('Денна', 'Денна'),
+        ('Заочна', 'Заочна')
     ]
     education_form = models.CharField(
         _('Education form'), 
