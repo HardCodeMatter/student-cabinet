@@ -1,0 +1,70 @@
+{% extends 'main/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="bg-white rounded p-3">
+        <div class="h4 ms-2">Інформація про курс</div>
+
+        <div class="row">
+            <div class="col">
+                <div class="form-floating">
+                    <input type="text" readonly class="form-control-plaintext" id="floatingCourseName" value="{{ course.name }}">
+                    <label for="floatingCourseName">Назва</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" readonly class="form-control-plaintext" id="floatingCourseShortName" value="{{ course.short_name }}">
+                    <label for="floatingCourseShortName">Коротка назва</label>
+                </div>
+        
+                <div class="form-floating">
+                    <input type="text" readonly class="form-control-plaintext" id="floatingCourseTeacher" value="{{ course.teacher }}">
+                    <label for="floatingCourseTeacher">Викладач курсу</label>
+                </div>
+            </div>
+    
+            <div class="col">
+                <div class="form-floating">
+                    <input type="text" readonly class="form-control-plaintext" id="floatingCourseHours" value="{{ course.hours }}">
+                    <label for="floatingCourseHours">Кількість годин</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" readonly class="form-control-plaintext" id="floatingCoursePoints" value="{{ course.points }}">
+                    <label for="floatingCoursePoints">Кількість балів</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" readonly class="form-control-plaintext" id="floatingDescription" value="{{ course.description }}">
+                        <label for="floatingDescription">Опис курсу</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a class="btn btn-primary" href="{% url 'course_update' course.id %}">Редагувати</a>
+        <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteCourseModal">
+            Видалити
+        </button>
+
+        <div class="modal fade text-dark" id="deleteCourseModal" tabindex="-1" aria-labelledby="deleteCourseModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="deleteCourseModalLabel">Видалення курсу</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Ви впевнені, що хочете видалити цей курс?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувати</button>
+                        <a class="btn btn-outline-danger" href="{% url 'course_delete' course.id %}">Видалити</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

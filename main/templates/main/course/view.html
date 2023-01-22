@@ -1,0 +1,19 @@
+{% extends 'main/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="bg-white rounded p-3">
+        {% for course in courses %}
+            <div class="list-group">
+                <a class="list-group-item mb-1" href="{% url 'course_detail' course.id %}">
+                    <div class="border-secondary rounded p-1">
+                        {{ course.name }}
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+
+        <a class="btn btn-primary mt-2" href="{% url 'course_create' %}">Create</a>
+    </div>
+{% endblock %}

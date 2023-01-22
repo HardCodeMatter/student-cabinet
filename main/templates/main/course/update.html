@@ -1,0 +1,40 @@
+{% extends 'main/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="bg-white rounded p-3">
+        <form action="" method="post">
+            {% csrf_token %}
+
+            <div class="d-grid gap-2">
+                <div class="row">
+                    <div class="col">
+                        {{ form.name|as_crispy_field }}
+                    </div>
+                    <div class="col-3">
+                        {{ form.short_name|as_crispy_field }}
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        {{ form.hours|as_crispy_field }}
+                    </div>
+                    <div class="col">
+                        {{ form.points|as_crispy_field }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        {{ form.description|as_crispy_field }}
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary mt-3" type="submit">Edit</button>
+            <a class="btn btn-outline-danger mt-3" href="{% url 'course_detail' course.id %}">Cancel</a>
+        </form>
+    </div>
+{% endblock %}

@@ -75,7 +75,7 @@ class CourseAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': ('name', 'short_name',)}),
         ('Course\'s information', {'fields': (
-            'teacher', 'hours', 'points',
+            'teacher', 'description', 'hours', 'points',
         )}),
     )
 

@@ -4,40 +4,67 @@
 
 {% block content %}
     <div class="bg-white text-dark rounded p-3">
-        <form action="" method="post">
-            {% csrf_token %}
+        {% if user.type == "ST" %}
+            <form action="" method="post">
+                {% csrf_token %}
 
-            <div class="d-grid gap-2">
-                <div class="row">
-                    <div class="col">
-                        {{ form.specialty|as_crispy_field }}
+                <div class="d-grid gap-2">
+                    <div class="row">
+                        <div class="col">
+                            {{ student_form.specialty|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ student_form.educational_program|as_crispy_field }}
+                        </div>
                     </div>
-                    <div class="col">
-                        {{ form.educational_program|as_crispy_field }}
+                    <div class="row">
+                        <div class="col">
+                            {{ student_form.educational_level|as_crispy_field }}
+                        </div>
                     </div>
+                    <div class="row">
+                        <div class="col">
+                            {{ student_form.group|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            {{ student_form.education_form|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ student_form.entry_date|as_crispy_field }}
+                        </div>
+                    </div>
+
                 </div>
-                <div class="row">
-                    <div class="col">
-                        {{ form.educational_level|as_crispy_field }}
+                
+                <button class="btn btn-primary mt-3" type="submit">Create</button>
+                <a class="btn btn-outline-danger mt-3" href="{% url 'profile_view' %}">Cancel</a>
+            </form>
+        {% elif user.type == "TR" %}
+            <form action="" method="post">
+                {% csrf_token %}
+
+                <div class="d-grid gap-2">
+                    <div class="row">
+                        <div class="col">
+                            {{ teacher_form.scientific_degree|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ teacher_form.academic_status|as_crispy_field }}
+                        </div>
                     </div>
+                    <div class="row">
+                        <div class="col">
+                            {{ teacher_form.office|as_crispy_field }}
+                        </div>
+                    </div>
+        
                 </div>
-                <div class="row">
-                    <div class="col">
-                        {{ form.group|as_crispy_field }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        {{ form.education_form|as_crispy_field }}
-                    </div>
-                    <div class="col">
-                        {{ form.entry_date|as_crispy_field }}
-                    </div>
-                </div>
-            </div>
-            
-            <button class="btn btn-primary mt-3" type="submit">Create</button>
-            <a class="btn btn-outline-danger mt-3" href="{% url 'profile_view' %}">Cancel</a>
-        </form>
+
+                <button class="btn btn-primary mt-3" type="submit">Create</button>
+                <a class="btn btn-outline-danger mt-3" href="{% url 'profile_view' %}">Cancel</a>
+            </form>
+        {% endif %}
     </div>
 {% endblock %}

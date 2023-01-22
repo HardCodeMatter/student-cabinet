@@ -2,11 +2,39 @@
 
 {% block content %}
     <div class="bg-white text-dark rounded p-3">
-        {% if profile %}
-            <div class="form-floating">
-                <input type="text" readonly class="form-control-plaintext" id="floatingFullName" value="{{ user.get_full_name }}">
-                <label for="floatingFullName">ПІБ</label>
-            </div>
+        <div class="h4 ms-2">Персональна інформація</div>
+
+        <div class="form-floating">
+            <input type="text" readonly class="form-control-plaintext" id="floatingFullName" value="{{ user.get_full_name }}">
+            <label for="floatingFullName">ПІБ</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="email" readonly class="form-control-plaintext" id="floatingEmail" value="{{ user.email }}">
+            <label for="floatingEmail">Електронна пошта</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="text" readonly class="form-control-plaintext" id="floatingPhoneNumber" value="{{ user.phone }}">
+            <label for="floatingPhoneNumber">Номер телефону</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="text" readonly class="form-control-plaintext" id="floatingDateOfBirth" value="{{ user.date_of_birth }}">
+            <label for="floatingDateOfBirth">Дата народження</label>
+        </div>
+        
+        <div class="form-floating">
+            <input type="text" readonly class="form-control-plaintext" id="floatingFaculty" value="{{ user.faculty }}">
+            <label for="floatingFaculty">Факультет</label>
+        </div>
+        <div class="form-floating">
+            <input type="text" readonly class="form-control-plaintext" id="floatingDepartment" value="{{ user.department }}">
+            <label for="floatingDepartment">Кафедра</label>
+        </div>
+        
+        {% if user.type == "ST" and profile != None %}
+            <div class="h4 ms-2 mt-4">Навчання</div>
 
             <div class="form-floating">
                 <input type="text" readonly class="form-control-plaintext" id="floatingSpecialty" value="{{ profile.specialty }}">
@@ -38,6 +66,25 @@
                 <label for="floatingEntryDate">Дата вступу</label>
             </div>
 
+            <a class="btn btn-outline-warning" href="{% url 'profile_update' %}">Edit</a>
+        {% elif user.type == "TR" and profile != None %}
+            <div class="h4 ms-2 mt-4">Вчительська інформація</div>
+
+            <div class="form-floating">
+                <input type="text" readonly class="form-control-plaintext" id="floatingScientificDegree" value="{{ profile.scientific_degree }}">
+                <label for="floatingScientificDegree">Науковий ступінь</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="text" readonly class="form-control-plaintext" id="floatingAcademicStatus" value="{{ profile.academic_status }}">
+                <label for="floatingAcademicStatus">Академічний рівень</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="text" readonly class="form-control-plaintext" id="floatingOffice" value="{{ profile.office }}">
+                <label for="floatingOffice">Кабінет</label>
+            </div>
+            
             <a class="btn btn-outline-warning" href="{% url 'profile_update' %}">Edit</a>
         {% else %}
             <a class="btn btn-primary" href="{% url 'profile_create' %}">Create</a>

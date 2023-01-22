@@ -1,5 +1,5 @@
 from django import forms
-from .models import Student
+from .models import Student, Teacher, Course
 
 
 class ProfileStudentForm(forms.ModelForm):
@@ -11,5 +11,25 @@ class ProfileStudentForm(forms.ModelForm):
             'educational_level',
             'group',
             'education_form',
-            'entry_date'
+            'entry_date',
+        )
+
+class ProfileTeacherForm(forms.ModelForm):
+    class Meta:
+        model = Teacher
+        fields = (
+            'scientific_degree',
+            'academic_status',
+            'office',
+        )
+
+class CourseForm(forms.ModelForm):
+    class Meta:
+        model = Course
+        fields = (
+            'name',
+            'short_name',
+            'description',
+            'hours',
+            'points',
         )
