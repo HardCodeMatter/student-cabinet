@@ -102,3 +102,7 @@ class Course(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+
+class Membership(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)

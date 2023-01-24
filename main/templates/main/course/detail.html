@@ -23,7 +23,7 @@
                 </div>
             </div>
     
-            <div class="col">
+            <div class="col-3">
                 <div class="form-floating">
                     <input type="text" readonly class="form-control-plaintext" id="floatingCourseHours" value="{{ course.hours }}">
                     <label for="floatingCourseHours">Кількість годин</label>
@@ -44,27 +44,35 @@
             </div>
         </div>
 
-        <a class="btn btn-primary" href="{% url 'course_update' course.id %}">Редагувати</a>
-        <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteCourseModal">
-            Видалити
-        </button>
+        {% if user.type == 'TR' %}
+            <a class="btn btn-primary" href="{% url 'course_update' course.id %}">Редагувати</a>
+            <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteCourseModal">
+                Видалити
+            </button>
 
-        <div class="modal fade text-dark" id="deleteCourseModal" tabindex="-1" aria-labelledby="deleteCourseModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="deleteCourseModalLabel">Видалення курсу</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Ви впевнені, що хочете видалити цей курс?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувати</button>
-                        <a class="btn btn-outline-danger" href="{% url 'course_delete' course.id %}">Видалити</a>
+            <div class="modal fade text-dark" id="deleteCourseModal" tabindex="-1" aria-labelledby="deleteCourseModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="deleteCourseModalLabel">Видалення курсу</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Ви впевнені, що хочете видалити цей курс?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувати</button>
+                            <a class="btn btn-outline-danger" href="{% url 'course_delete' course.id %}">Видалити</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        {% elif user.type == 'ST' %}
+            {% if membership %}
+                <h3>You're subscribe on this course!</h3>
+            {% else %}
+                <a class="btn btn-primary" href="{% url 'course_add' course.id %}">Записатися</a>
+            {% endif %}
+        {% endif %}
     </div>
 {% endblock %}

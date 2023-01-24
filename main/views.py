@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from user.models import User
-from .models import Teacher, Student, Course
+from .models import Teacher, Student, Course, Membership
 from .forms import ProfileStudentForm, ProfileTeacherForm, CourseForm
 
 
@@ -115,9 +115,12 @@ def profile_update(request):
 @login_required
 def course_view(request):
     courses = Course.objects.filter(teacher=request.user.id)
+    student = Student.objects.get(user=request.user.id)
+    memberships = Membership.objects.filter(student=student)
 
     context = {
-        'courses': courses
+        'courses': courses,
+        'memberships': memberships,
     }
 
     return render(request, 'main/course/view.html', context)
@@ -125,15 +128,21 @@ def course_view(request):
 @login_required
 def course_detail(request, id):
     course = Course.objects.get(id=id)
+    student = Student.objects.get(user=request.user.id)
+    membership = Membership.objects.filter(student=student, course=course)
 
     context = {
-        'course': course
+        'course': course,
+        'membership': membership,
     }
 
     return render(request, 'main/course/detail.html', context)
 
 @login_required
 def course_create(request):
+    if request.user.type == 'ST':
+        return redirect('/course/')
+
     if request.method == 'POST':
         form = CourseForm(request.POST)
 
@@ -153,7 +162,11 @@ def course_create(request):
     
     return render(request, 'main/course/create.html', {'form': form})
 
+@login_required
 def course_update(request, id):
+    if request.user.type == 'ST':
+        return redirect('/course/')
+
     course = Course.objects.get(id=id)
 
     if request.method == 'POST':
@@ -175,8 +188,51 @@ def course_update(request, id):
 
     return render(request, 'main/course/update.html', context)
 
+@login_required
 def course_delete(request, id):
+    if request.user.type == 'ST':
+        return redirect('/course/')
+
     course = Course.objects.get(id=id)
     course.delete()
 
     return redirect(f'/course/')
+
+
+@login_required
+def course_list(request):
+    student = Student.objects.get(user=request.user.id)
+    courses = Course.objects.all()
+
+    available_courses = []
+    subscribed_courses = []
+
+    for course in courses:
+        try:
+            membership = Membership.objects.get(course=course, student=student)
+        except ObjectDoesNotExist:
+            print('Object dosn\'t exist!')
+
+        if course.id != membership.course.id:
+            available_courses.append(course)
+        else:
+            subscribed_courses.append(course)
+
+    context = {
+        'subscribed_courses': subscribed_courses,
+        'available_courses': available_courses,
+    }
+
+    return render(request, 'main/course/list.html', context)
+
+@login_required
+def course_add(request, id):
+    student = Student.objects.get(user=request.user.id)
+    course = Course.objects.get(id=id)
+
+    Membership.objects.create(
+        student=student,
+        course=course
+    )
+
+    return redirect(f'/course/{course.id}/')

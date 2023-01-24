@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Faculty, Department, Teacher, Student, Course
+from .models import Faculty, Department, Teacher, Student, Course, Membership
 
 
 @admin.register(Faculty)
@@ -81,3 +81,15 @@ class CourseAdmin(admin.ModelAdmin):
 
     search_fields = ('short_name', 'teacher')
     ordering = ('short_name',)
+
+@admin.register(Membership)
+class MembershipAdmin(admin.ModelAdmin):
+    list_display = ('course', 'student',)
+    list_filter = ('course', 'student',)
+
+    fieldsets = (
+        (None, {'fields': ('course', 'student',)}),
+    )
+
+    search_fields = ('course', 'student',)
+    ordering = ('course',)
