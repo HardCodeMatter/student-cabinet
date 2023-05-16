@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from user.models import User
-from .models import Teacher, Student, Course, Membership
-from .forms import ProfileStudentForm, ProfileTeacherForm, CourseForm, CoursePointForm
+from .models import Teacher, Student, Course, Membership, Message
+from .forms import ProfileStudentForm, ProfileTeacherForm, CourseForm, CoursePointForm, CourseMessageForm
 
 
 def index(request):
@@ -289,3 +289,30 @@ def course_grade_list(request):
     }
 
     return render(request, 'main/course/grade_list.html', context)
+
+
+@login_required
+def course_message(request, id):
+    course = Course.objects.get(id=id)
+    messages = Message.objects.filter(course=course).order_by('-id')
+
+    if request.method == 'POST':
+        form = CourseMessageForm(request.POST)
+
+        if form.is_valid():
+            Message.objects.create(
+                course = course,
+                author = request.user,
+                message = form.cleaned_data['message'],
+            )
+
+            return redirect(f'/course/{course.id}/message/')
+    else:
+        form = CourseMessageForm()
+
+    context = {
+        'messages': messages,
+        'form': form,
+    }
+
+    return render(request, 'main/course/message.html', context)

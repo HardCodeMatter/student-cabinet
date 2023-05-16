@@ -26,6 +26,10 @@
                         <a class="nav-link {% if request.resolver_match.url_name == 'course_grade_list' %}active{% endif %}" href="{% url 'course_grade_list' %}">Мої оцінки</a>
                     </li>
                 {% endif %}
+
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'course_view' or request.resolver_match.url_name == 'course_detail' %}active{% endif %}" href="{% url 'course_view' %}">Мої чати</a>
+                </li>
             </ul>
         </div>
         

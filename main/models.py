@@ -107,3 +107,9 @@ class Membership(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     points = models.IntegerField(_('Бали'), blank=True, null=True)
+
+
+class Message(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.CharField(('Повідомлення'), max_length=500)
