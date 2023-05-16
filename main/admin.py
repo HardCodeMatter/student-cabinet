@@ -84,11 +84,11 @@ class CourseAdmin(admin.ModelAdmin):
 
 @admin.register(Membership)
 class MembershipAdmin(admin.ModelAdmin):
-    list_display = ('course', 'student',)
-    list_filter = ('course', 'student',)
+    list_display = ('course', 'student', 'points',)
+    list_filter = ('course', 'student', 'points',)
 
     fieldsets = (
-        (None, {'fields': ('course', 'student',)}),
+        (None, {'fields': ('course', 'student', 'points')}),
     )
 
     search_fields = ('course', 'student',)

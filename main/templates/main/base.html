@@ -11,17 +11,21 @@
         <div class="col-1 bg-white p-3" style="width: 220px; height: 100vh;">
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Головна</a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Головна</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'course_view' %}">Мої курси</a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'course_view' or request.resolver_match.url_name == 'course_detail' %}active{% endif %}" href="{% url 'course_view' %}">Мої курси</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'course_list' %}">Список курсів</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled">Відключено</a>
-                </li>
+                
+                {% if user.type == 'ST' %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'course_list' %}active{% endif %}" href="{% url 'course_list' %}">Список курсів</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'course_grade_list' %}active{% endif %}" href="{% url 'course_grade_list' %}">Мої оцінки</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
         
@@ -74,7 +78,33 @@
         
             <div class="row">
                 <div class="container">
-                    {% block content %}{% endblock %}
+                    {% block content %}
+                        <div class="list-group">
+                            <div class="list-group-item">
+                                <h4>Коротка довідка про роботу системи</h4>
+
+                                <p>
+                                    Ласкаво просимо до інформаційної системи особистого кабінету студента, 
+                                    яка призначена для взаємодії студентів та викладачів, що дозволить покращити навчальний процес.
+                                </p>
+
+                                <p>
+                                    Система володіє багатим функціоналом, а саме:
+
+                                    <ul>
+                                        <li>система автентифікації та авторизації;</li>
+                                        <li>система створення та запису на курси;</li>
+                                        <li>система успішності та виставлення оцінок студентам;</li>
+                                        <li>можливість додавати, редагувати та видаляти інформації.</li>
+                                    </ul>
+                                </p>
+
+                                <p>
+                                    Подальший шлях розвитку системи може включати в себе розширення функціональності системи.
+                                </p>
+                            </div>
+                        </div>
+                    {% endblock %}
                 </div>
             </div>
         </div>

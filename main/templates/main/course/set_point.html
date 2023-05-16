@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="bg-white rounded p-3">
+        <form action="." method="post">
+            {% csrf_token %}
+
+            <div class="form-floating">
+                <input type="text" readonly class="form-control-plaintext" id="floatingDescription" value="{{ course }}">
+                <label for="floatingDescription">Курс</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" readonly class="form-control-plaintext" id="floatingDescription" value="{{ student }}">
+                <label for="floatingDescription">Студент</label>
+            </div>
+
+            {{ form.points|as_crispy_field }}
+            
+            <button class="btn btn-primary mt-3" type="submit">Оцінити</button>
+            <a class="btn btn-outline-danger mt-3" href="{% url 'course_list' %}">Скасувати</a>
+        </form>
+    </div>
+{% endblock %}

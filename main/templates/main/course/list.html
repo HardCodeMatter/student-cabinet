@@ -3,19 +3,8 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="bg-white rounded p-3">
-        <h3>Мої курси</h3>
-        {% for course in subscribed_courses %}    
-            <div class="list-group">
-                <a class="list-group-item mb-1" href="{% url 'course_detail' course.id %}">
-                    <div class="border-secondary rounded p-1">
-                        {{ course.name }}
-                    </div>
-                </a>
-            </div>
-        {% endfor %}
-        
-        <h3 class="mt-4">Доступні курси</h3>
+    <div class="bg-white rounded p-3">        
+        <h3>Доступні курси</h3>
         {% for course in available_courses %}    
             <div class="list-group">
                 <a class="list-group-item mb-1" href="{% url 'course_detail' course.id %}">

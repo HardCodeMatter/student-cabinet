@@ -30,7 +30,7 @@
                 </div>
                 <div class="form-floating">
                     <input type="text" readonly class="form-control-plaintext" id="floatingCoursePoints" value="{{ course.points }}">
-                    <label for="floatingCoursePoints">Кількість балів</label>
+                    <label for="floatingCoursePoints">Кількість кредитів</label>
                 </div>
             </div>
 
@@ -75,4 +75,28 @@
             {% endif %}
         {% endif %}
     </div>
+
+    {% if user.type == 'TR' %}
+        <table class="mt-3 table bg-white">
+            <tr>
+                <td>Ім'я</td>
+                <td>Група</td>
+                <td>Бали</td>
+            </tr>
+
+            {% for student in student_list %}
+                <tr>
+                    <td class="col">{{ student.student }}</td>
+                    <td class="col-2">{{ student.student.group }}</td>
+                    <td class="col-2">
+                        {% if student.points %}
+                            {{ student.points }}
+                        {% else %}
+                            <a class="btn btn-sm btn-primary" href="{% url 'course_set_point' student.course_id student.student_id %}">Оцінити</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
 {% endblock %}

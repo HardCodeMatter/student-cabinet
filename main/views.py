@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from user.models import User
 from .models import Teacher, Student, Course, Membership
-from .forms import ProfileStudentForm, ProfileTeacherForm, CourseForm
+from .forms import ProfileStudentForm, ProfileTeacherForm, CourseForm, CoursePointForm
 
 
 def index(request):
@@ -114,8 +114,12 @@ def profile_update(request):
 
 @login_required
 def course_view(request):
+    try:
+        student = Student.objects.get(user=request.user.id)
+    except ObjectDoesNotExist:
+        student = None
+
     courses = Course.objects.filter(teacher=request.user.id)
-    student = Student.objects.get(user=request.user.id)
     memberships = Membership.objects.filter(student=student)
 
     context = {
@@ -128,12 +132,21 @@ def course_view(request):
 @login_required
 def course_detail(request, id):
     course = Course.objects.get(id=id)
-    student = Student.objects.get(user=request.user.id)
-    membership = Membership.objects.filter(student=student, course=course)
+    student_list = Membership.objects.filter(course_id=id)
+    
+    try:
+        membership = None
+
+        if request.user.type == 'ST':
+            student = Student.objects.get(user=request.user.id)
+            membership = Membership.objects.filter(student=student, course=course)
+    except ObjectDoesNotExist:
+        print('Object doen\'t exist!')
 
     context = {
         'course': course,
         'membership': membership,
+        'student_list': student_list,
     }
 
     return render(request, 'main/course/detail.html', context)
@@ -201,11 +214,13 @@ def course_delete(request, id):
 
 @login_required
 def course_list(request):
+    if request.user.type == 'TR':
+        return redirect('/course/')
+
     student = Student.objects.get(user=request.user.id)
     courses = Course.objects.all()
 
     available_courses = []
-    subscribed_courses = []
 
     for course in courses:
         try:
@@ -215,11 +230,8 @@ def course_list(request):
 
         if course.id != membership.course.id:
             available_courses.append(course)
-        else:
-            subscribed_courses.append(course)
 
     context = {
-        'subscribed_courses': subscribed_courses,
         'available_courses': available_courses,
     }
 
@@ -227,6 +239,9 @@ def course_list(request):
 
 @login_required
 def course_add(request, id):
+    if request.user.type == 'TR':
+        return redirect(f'/course/{id}')
+
     student = Student.objects.get(user=request.user.id)
     course = Course.objects.get(id=id)
 
@@ -236,3 +251,41 @@ def course_add(request, id):
     )
 
     return redirect(f'/course/{course.id}/')
+
+@login_required
+def course_set_point(request, course_id, student_id):
+    course = Course.objects.get(id=course_id)
+    student = Student.objects.get(id=student_id)
+
+    if request.method == 'POST':
+        form = CoursePointForm(request.POST)
+
+        if form.is_valid():
+            Membership.objects.filter(
+                course=course, student=student_id
+            ).update(
+                points=form.cleaned_data['points']
+            )
+
+            return redirect(f'/course/{course.id}/')
+    else:
+        form = CoursePointForm()
+
+    context = {
+        'form': form,
+        'course': course,
+        'student': student,
+    }
+    
+    return render(request, 'main/course/set_point.html', context)
+
+@login_required
+def course_grade_list(request):
+    student = Student.objects.get(user=request.user)
+    memberships = Membership.objects.filter(student=student)
+
+    context = {
+        'memberships': memberships,
+    }
+
+    return render(request, 'main/course/grade_list.html', context)
