@@ -292,8 +292,30 @@ def course_grade_list(request):
 
 
 @login_required
+def course_message_list(request):
+    try:
+        memberships = None
+        courses = None
+
+        if request.user.type == 'ST':
+            student = Student.objects.get(user=request.user.id)
+            memberships = Membership.objects.filter(student=student)
+        elif request.user.type == 'TR':
+            courses = Course.objects.filter(teacher=request.user)
+    except ObjectDoesNotExist:
+        print('Об\'єкт не знайдено!')
+
+    context = {
+        'memberships': memberships,
+        'courses': courses,
+    }
+
+    return render(request, 'main/course/message_list.html', context)
+
+@login_required
 def course_message(request, id):
     course = Course.objects.get(id=id)
+    memberships = Membership.objects.filter(course=course)
     messages = Message.objects.filter(course=course).order_by('-id')
 
     if request.method == 'POST':
@@ -311,7 +333,9 @@ def course_message(request, id):
         form = CourseMessageForm()
 
     context = {
+        'course': course,
         'messages': messages,
+        'memberships': memberships,
         'form': form,
     }
 

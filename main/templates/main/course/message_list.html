@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="bg-white rounded p-3">        
+        <h3>Мої чати</h3>
+
+        {% if user.type == "ST" %}
+            {% for membership in memberships %}    
+                <div class="list-group">
+                    <a class="list-group-item mb-1" href="{% url 'course_message' membership.course_id %}">
+                        <div class="d-flex justify-content-between border-secondary rounded p-1">
+                            {{ membership.course }}
+                            <small>Викладач: {{ membership.course.teacher }}</small>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        {% elif user.type == "TR" %}
+            {% for course in courses %}
+                <div class="list-group">
+                    <a class="list-group-item mb-1" href="{% url 'course_message' course.id %}">
+                        <div class="d-flex justify-content-between border-secondary rounded p-1">
+                            {{ course }}
+                            <small>Викладач: {{ course.teacher }}</small>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}

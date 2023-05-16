@@ -28,7 +28,7 @@
                 {% endif %}
 
                 <li class="nav-item">
-                    <a class="nav-link {% if request.resolver_match.url_name == 'course_view' or request.resolver_match.url_name == 'course_detail' %}active{% endif %}" href="{% url 'course_view' %}">Мої чати</a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'course_message_list' or request.resolver_match.url_name == 'course_message' %}active{% endif %}" href="{% url 'course_message_list' %}">Мої чати</a>
                 </li>
             </ul>
         </div>
