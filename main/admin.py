@@ -63,7 +63,7 @@ class StudentAdmin(admin.ModelAdmin):
             'group',
             'education_form',
             'entry_date',
-
+          
             'faculty',
             'department',
         )})
