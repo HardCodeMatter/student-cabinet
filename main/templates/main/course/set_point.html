@@ -18,8 +18,8 @@
 
             {{ form.points|as_crispy_field }}
             
-            <button class="btn btn-primary mt-3" type="submit">Оцінити</button>
-            <a class="btn btn-outline-danger mt-3" href="{% url 'course_list' %}">Скасувати</a>
+            <button class="btn btn-sm btn-primary mt-3" type="submit">Оцінити</button>
+            <a class="btn btn-sm btn-outline-danger mt-3" href="{% url 'course_list' %}">Скасувати</a>
         </form>
     </div>
 {% endblock %}

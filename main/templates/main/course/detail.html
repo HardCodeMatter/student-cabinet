@@ -4,7 +4,10 @@
 
 {% block content %}
     <div class="bg-white rounded p-3">
-        <div class="h4 ms-2">Інформація про курс</div>
+        <div class="ms-2 mb-2">
+            <div class="h4">Інформація про курс</div>
+            <small class="text-muted">{{ course.course_type }}</small>
+        </div>
 
         <div class="row">
             <div class="col">
@@ -45,8 +48,8 @@
         </div>
 
         {% if user.type == 'TR' %}
-            <a class="btn btn-primary" href="{% url 'course_update' course.id %}">Редагувати</a>
-            <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteCourseModal">
+            <a class="btn btn-sm btn-primary" href="{% url 'course_update' course.id %}">Редагувати</a>
+            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteCourseModal">
                 Видалити
             </button>
 
@@ -61,17 +64,17 @@
                             Ви впевнені, що хочете видалити цей курс?
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувати</button>
-                            <a class="btn btn-outline-danger" href="{% url 'course_delete' course.id %}">Видалити</a>
+                            <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Скасувати</button>
+                            <a class="btn btn-sm btn-outline-danger" href="{% url 'course_delete' course.id %}">Видалити</a>
                         </div>
                     </div>
                 </div>
             </div>
         {% elif user.type == 'ST' %}
             {% if membership %}
-                <h3>You're subscribe on this course!</h3>
+                <h5>Ви записані на цей курс!</h5>
             {% else %}
-                <a class="btn btn-primary" href="{% url 'course_add' course.id %}">Записатися</a>
+                <a class="btn btn-sm btn-primary" href="{% url 'course_add' course.id %}">Записатися</a>
             {% endif %}
         {% endif %}
     </div>

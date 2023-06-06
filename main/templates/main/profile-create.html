@@ -38,8 +38,8 @@
 
                 </div>
                 
-                <button class="btn btn-primary mt-3" type="submit">Create</button>
-                <a class="btn btn-outline-danger mt-3" href="{% url 'profile_view' %}">Cancel</a>
+                <button class="btn btn-sm btn-primary mt-3" type="submit">Створити</button>
+                <a class="btn btn-sm btn-outline-danger mt-3" href="{% url 'profile_view' %}">Скасувати</a>
             </form>
         {% elif user.type == "TR" %}
             <form action="" method="post">
@@ -62,8 +62,8 @@
         
                 </div>
 
-                <button class="btn btn-primary mt-3" type="submit">Create</button>
-                <a class="btn btn-outline-danger mt-3" href="{% url 'profile_view' %}">Cancel</a>
+                <button class="btn btn-sm btn-primary mt-3" type="submit">Створити</button>
+                <a class="btn btn-sm btn-outline-danger mt-3" href="{% url 'profile_view' %}">Скасувати</a>
             </form>
         {% endif %}
     </div>

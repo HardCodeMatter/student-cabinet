@@ -36,7 +36,14 @@
         <div class="col m-3">
             <div class="row mb-3">
                 <div class="bg-white rounded p-3 d-flex justify-content-between align-items-center">
-                    <div>{{ user.get_type_display }}</div>
+                    <div>
+                        {% if user.get_type_display == 'Teacher' %}
+                            Викладач
+                        {% else %}
+                            Студент
+                        {% endif %}
+                    </div>
+
                     <div>
                         {% if user.is_authenticated %}
                             <div class="dropdown">
@@ -44,12 +51,11 @@
                                     {{ user.first_name }} {{ user.last_name }}
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{% url 'profile_view' %}">Profile</a></li>
-                                    <li><a class="dropdown-item disabled" href="#">Settings</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'profile_view' %}">Мій профіль</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
                                         <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                                            Log out
+                                            Вийти
                                         </a>
                                     </li>
                                 </ul>

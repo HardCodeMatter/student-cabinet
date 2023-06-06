@@ -222,13 +222,15 @@ def course_list(request):
 
     available_courses = []
 
+    membership = None
+
     for course in courses:
         try:
-            membership = Membership.objects.get(course=course, student=student)
+            membership = Membership.objects.get(student=student, course=course)
         except ObjectDoesNotExist:
-            print('Object dosn\'t exist!')
+            print('Object was not found!')
 
-        if course.id != membership.course.id:
+        if membership != None and course != membership.course:
             available_courses.append(course)
 
     context = {

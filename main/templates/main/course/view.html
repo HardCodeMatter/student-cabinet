@@ -11,7 +11,8 @@
                 <div class="list-group">
                     <a class="list-group-item mb-1" href="{% url 'course_detail' course.id %}">
                         <div class="border-secondary rounded p-1">
-                            {{ course.name }}
+                            <div>{{ course.name }}</div>
+                            <small class="text-muted">{{ course.course_type }}</small>
                         </div>
                     </a>
                 </div>
@@ -21,7 +22,8 @@
                 <div class="list-group">
                     <a class="list-group-item mb-1" href="{% url 'course_detail' membership.course.id %}">
                         <div class="border-secondary rounded p-1">
-                            {{ membership.course.name }}
+                            <div>{{ membership.course.name }}</div>
+                            <small class="text-muted">{{ membership.course.course_type }}</small>
                         </div>
                     </a>
                 </div>
@@ -29,7 +31,7 @@
         {% endif %}
 
         {% if user.type == 'TR' %}
-            <a class="btn btn-primary mt-2" href="{% url 'course_create' %}">Створити курс</a>
+            <a class="btn btn-sm btn-primary mt-2" href="{% url 'course_create' %}">Створити курс</a>
         {% endif %}
     </div>
 {% endblock %}

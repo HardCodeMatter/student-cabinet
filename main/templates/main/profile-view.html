@@ -26,11 +26,11 @@
             </div>
             
             <div class="form-floating">
-                <input type="text" readonly class="form-control-plaintext" id="floatingFaculty" value="{{ user.faculty }}">
+                <input type="text" readonly class="form-control-plaintext" id="floatingFaculty" value="{{ profile.faculty }}">
                 <label for="floatingFaculty">Факультет</label>
             </div>
             <div class="form-floating">
-                <input type="text" readonly class="form-control-plaintext" id="floatingDepartment" value="{{ user.department }}">
+                <input type="text" readonly class="form-control-plaintext" id="floatingDepartment" value="{{ profile.department }}">
                 <label for="floatingDepartment">Кафедра</label>
             </div>
         </div>
@@ -69,7 +69,7 @@
                     <label for="floatingEntryDate">Дата вступу</label>
                 </div>
 
-                <a class="btn btn-outline-warning" href="{% url 'profile_update' %}">Редагувати</a>
+                <a class="btn btn-sm btn-outline-warning" href="{% url 'profile_update' %}">Редагувати</a>
             {% elif user.type == "TR" and profile != None %}
                 <div class="h4 ms-2 mt-4">Вчительська інформація</div>
 
@@ -88,9 +88,9 @@
                     <label for="floatingOffice">Кабінет</label>
                 </div>
                 
-                <a class="btn btn-outline-warning" href="{% url 'profile_update' %}">Редагувати</a>
+                <a class="btn btn-sm btn-outline-warning" href="{% url 'profile_update' %}">Редагувати</a>
             {% else %}
-                <a class="btn btn-primary" href="{% url 'profile_create' %}">Створити</a>
+                <a class="btn btn-sm btn-primary" href="{% url 'profile_create' %}">Створити</a>
             {% endif %}
         </div>
     </div>

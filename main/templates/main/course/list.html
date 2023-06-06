@@ -9,7 +9,8 @@
             <div class="list-group">
                 <a class="list-group-item mb-1" href="{% url 'course_detail' course.id %}">
                     <div class="border-secondary rounded p-1">
-                        {{ course.name }}
+                        <div>{{ course.name }}</div>
+                        <small class="text-muted">{{ course.course_type }}</small>
                     </div>
                 </a>
             </div>

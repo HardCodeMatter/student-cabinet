@@ -30,24 +30,27 @@ class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     office = models.CharField(_('Teacher\'s office'), max_length=5, blank=True, null=True)
 
+    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, null=True)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True)
+
     class ScientificDegree(models.TextChoices):
-        DOCTOR = 'DS', _('Doctor of Sciences')
-        CANDIDATE = 'CS', _('Candidate of Sciences')
+        DOCTOR = 'Доктор наук', _('Доктор наук')
+        CANDIDATE = 'Кандидат наук', _('Кандидат наук')
     
     scientific_degree = models.CharField(
-        _('Scientific degree'),
-        max_length=2,
+        _('Науковий ступінь'),
+        max_length=13,
         choices=ScientificDegree.choices
     )
 
     class AcademicStatus(models.TextChoices):
-        RESEARCH_OFFICER = 'RO', _('Senior Research Officer')
-        DOCENT = 'DC', _('Docent')
-        PROFESSOR = 'PR', _('Professor')
+        RESEARCH_OFFICER = 'Ст. науковий дослідник', _('Ст. науковий дослідник')
+        DOCENT = 'Доцент', _('Доцент')
+        PROFESSOR = 'Професор', _('Професор')
 
     academic_status = models.CharField(
-        _('Academic status'),
-        max_length=2,
+        _('Вчене звання'),
+        max_length=22,
         choices=AcademicStatus.choices
     )
 
@@ -58,8 +61,11 @@ class Teacher(models.Model):
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     specialty = models.CharField(_('Specialty'), max_length=30, blank=True, null=True)
-    educational_program = models.CharField(_('Educational program'), max_length=30, blank=True, null=True)
+    educational_program = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='student_educational_program', null=True, default=None)
     
+    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, null=True)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='student_department', null=True)
+
     EDUCATIONAL_LEVEL_CHOICES = [
         ('Бакалавр', 'Бакалаврат'),
         ('Магістр', 'Магістратура'),
@@ -99,6 +105,18 @@ class Course(models.Model):
     teacher = models.ForeignKey(User, on_delete=models.CASCADE)
     hours = models.IntegerField(_('Hours'))
     points = models.IntegerField(_('Points'))
+
+    class CourseType(models.TextChoices):
+        GENERAL_TRAINING = 'Дисципліна загальної підготовки', _('Дисципліна загальної підготовки')
+        PROFESSIONAL_TRAINING = 'Дисципліна професійної підготовки', _('Дисципліна професійної підготовки')
+        ELECTIVE_DISCIPLINE = 'Вибіркова дисципліна', _('Вибіркова дисципліна')
+    
+    course_type = models.CharField(
+        _('Тип дисципліни'),
+        max_length=33,
+        choices=CourseType.choices,
+        null=True,
+    )
 
     def __str__(self):
         return f'{self.name}'

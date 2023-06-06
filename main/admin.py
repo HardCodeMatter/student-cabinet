@@ -36,9 +36,12 @@ class TeacherAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': ('user',)}),
         ('Teacher\'s information', {'fields': (
-            'scientific_degree', 
+            'scientific_degree',
             'academic_status',
             'office',
+
+            'faculty',
+            'department',
         )}),
     )
     
@@ -60,6 +63,9 @@ class StudentAdmin(admin.ModelAdmin):
             'group',
             'education_form',
             'entry_date',
+
+            'faculty',
+            'department',
         )})
     )
 
@@ -75,7 +81,7 @@ class CourseAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': ('name', 'short_name',)}),
         ('Course\'s information', {'fields': (
-            'teacher', 'description', 'hours', 'points',
+            'teacher', 'description', 'course_type', 'hours', 'points',
         )}),
     )
 
