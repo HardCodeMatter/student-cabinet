@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="list-group">
+        {% for membership in memberships %}
+            <div class="list-group-item d-flex justify-content-between">
+                <div>{{ membership.course }}</div>
+                <div>
+                    {% if membership.points %}
+                        {{ membership.points }} / <span class="text-muted">100</span>
+                    {% else %}
+                        <span class="text-muted">Оцінка відсутня</span>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
