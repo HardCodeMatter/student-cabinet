@@ -1,0 +1,68 @@
+{% extends 'main/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="bg-white text-dark rounded p-3">
+        {% if user.type == "ST" %}
+            <form action="" method="post">
+                {% csrf_token %}
+
+                <div class="d-grid gap-2">
+                    <div class="row">
+                        <div class="col">
+                            {{ student_form.specialty|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ student_form.educational_program|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            {{ student_form.educational_level|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            {{ student_form.group|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            {{ student_form.education_form|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ student_form.entry_date|as_crispy_field }}
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-sm btn-primary mt-3" type="submit">Підтвердити</button>
+                <a class="btn btn-sm btn-outline-danger mt-3" href="{% url 'profile_view' %}">Скасувати</a>
+            </form>
+        {% elif user.type == "TR" %}
+            <form action="" method="post">
+                {% csrf_token %}
+
+                <div class="d-grid gap-2">
+                    <div class="row">
+                        <div class="col">
+                            {{ teacher_form.scientific_degree|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            {{ teacher_form.academic_status|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            {{ teacher_form.office|as_crispy_field }}
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-sm btn-primary mt-3" type="submit">Підтвердити</button>
+                <a class="btn btn-sm btn-outline-danger mt-3" href="{% url 'profile_view' %}">Скасувати</a>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

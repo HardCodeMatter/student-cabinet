@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="bg-white rounded p-3">
+        <h3>Мої курси</h3>
+        
+        {% if user.type == 'TR' %}
+            {% for course in courses %}
+                <div class="list-group">
+                    <a class="list-group-item mb-1" href="{% url 'course_detail' course.id %}">
+                        <div class="border-secondary rounded p-1">
+                            <div>{{ course.name }}</div>
+                            <small class="text-muted">{{ course.course_type }}</small>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        {% elif user.type == 'ST' %}
+            {% for membership in memberships %}
+                <div class="list-group">
+                    <a class="list-group-item mb-1" href="{% url 'course_detail' membership.course.id %}">
+                        <div class="border-secondary rounded p-1">
+                            <div>{{ membership.course.name }}</div>
+                            <small class="text-muted">{{ membership.course.course_type }}</small>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if user.type == 'TR' %}
+            <a class="btn btn-sm btn-primary mt-2" href="{% url 'course_create' %}">Створити курс</a>
+        {% endif %}
+    </div>
+{% endblock %}
